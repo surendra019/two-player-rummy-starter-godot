@@ -1,0 +1,172 @@
+[gd_scene load_steps=5 format=3 uid="uid://qed3njjpcvbn"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_r3xqo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sic2b"]
+bg_color = Color(7.70092e-07, 0.291338, 0.331916, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smtpq"]
+bg_color = Color(0.352941, 0.0941176, 0.254902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ajvqe"]
+bg_color = Color(0, 0, 0, 0.588235)
+
+[node name="Main" type="Control" groups=["main"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r3xqo")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sic2b")
+
+[node name="Table" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 183.0
+offset_top = 121.0
+offset_right = -183.0
+offset_bottom = -121.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_smtpq")
+
+[node name="StockPile" type="Panel" parent="Table"]
+custom_minimum_size = Vector2(168, 220)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -306.0
+offset_top = -99.0
+offset_right = -138.0
+offset_bottom = 121.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ajvqe")
+
+[node name="Label2" type="Label" parent="Table/StockPile"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -45.0
+offset_top = -33.0
+offset_right = 46.0
+offset_bottom = -10.0
+grow_horizontal = 2
+text = "Stock pile"
+
+[node name="DiscardPile" type="Panel" parent="Table"]
+custom_minimum_size = Vector2(168, 220)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -92.0
+offset_top = -102.0
+offset_right = 76.0
+offset_bottom = 118.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ajvqe")
+
+[node name="Label" type="Label" parent="Table/DiscardPile"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -252.0
+offset_right = 43.0
+offset_bottom = -229.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Discard pile"
+
+[node name="Player1" type="Label" parent="Table"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -291.0
+offset_top = -96.0
+offset_right = -102.0
+offset_bottom = -19.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Player2"
+horizontal_alignment = 1
+
+[node name="Player2" type="Label" parent="Table"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 213.0
+offset_top = 339.0
+offset_right = 402.0
+offset_bottom = 416.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Player1"
+horizontal_alignment = 1
+
+[node name="InformationLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 15.0
+offset_right = 244.0
+offset_bottom = 62.0
+theme_override_font_sizes/font_size = 20
+
+[node name="TurnIndicator" type="Label" parent="."]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 63.0
+offset_right = 243.0
+offset_bottom = 110.0
+theme_override_font_sizes/font_size = 20
+
+[node name="CardSpawnPosition" type="Marker2D" parent="."]
+position = Vector2(100, 301)
+
+[node name="OpponentCardPosition" type="Marker2D" parent="."]
+position = Vector2(590, 85)
+
+[node name="SelfCardPosition" type="Marker2D" parent="."]
+position = Vector2(136, 537)
+
+[node name="Cards" type="Node2D" parent="."]
+
+[node name="DeclareButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -195.0
+offset_top = -95.0
+offset_right = -91.0
+offset_bottom = -39.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Declare"

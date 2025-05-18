@@ -1,0 +1,86 @@
+[gd_scene load_steps=3 format=3 uid="uid://vsl2ync5o6c6"]
+
+[ext_resource type="Texture2D" uid="uid://cl1jksvgp6w0g" path="res://Assets/Pyramid Kings/Cards/back.png" id="1_4c1fh"]
+
+[sub_resource type="GDScript" id="GDScript_2ixei"]
+script/source = "extends TextureRect
+
+var back_texture: CompressedTexture2D
+var value: int = -1
+var type: String = \"\"
+var pickable_mode: PICKABLE_MODE
+enum PICKABLE_MODE {STOCK, SELF, DISCARD, NONE}
+var original_position: Vector2
+var is_selected: bool
+var main_ref
+var selected_z_index: int = 50
+
+func _ready() -> void:
+	main_ref = get_tree().get_first_node_in_group(\"main\")
+	back_texture = load(Manager.card_back)
+	
+func set_to_back() -> void:
+	texture = back_texture
+
+func set_to_front() -> void:
+	var cards_ref: Dictionary
+	match type:
+		\"s\": 
+			cards_ref = Manager.sphades
+		\"d\":
+			cards_ref = Manager.diamonds
+		\"c\":
+			cards_ref = Manager.clubs
+		\"h\":
+			cards_ref = Manager.hearts
+	
+	if cards_ref and value != -1:
+		texture = load(cards_ref[value])
+		
+
+
+func initialize(type: String, value: int, pickable_mode: PICKABLE_MODE) -> void:
+	self.type = type
+	self.value = value
+	self.pickable_mode = pickable_mode
+	
+
+
+func _on_gui_input(event: InputEvent) -> void:
+	if main_ref.can_select:
+		if event is InputEventScreenTouch:
+			if event.pressed:
+				if pickable_mode == PICKABLE_MODE.SELF:
+					if not is_selected:
+						if main_ref.current_selected_card:
+							var t = create_tween()
+							t.tween_property(main_ref.current_selected_card, \"global_position\", main_ref.current_selected_card.original_position, .2)
+							t.play()
+							main_ref.current_selected_card.is_selected = false
+							main_ref.current_selected_card.z_index = 0
+						var t = create_tween()
+						t.tween_property(self, \"global_position\", Vector2(original_position.x, original_position.y - 50), .2)
+						t.play()
+						main_ref.current_selected_card = self
+						is_selected = true
+						z_index = selected_z_index
+						
+					else:
+						main_ref.move_card_to_discard_pile(self)
+						is_selected = false
+				elif pickable_mode == PICKABLE_MODE.STOCK:
+					main_ref.add_card_to_self(self)
+				elif pickable_mode == PICKABLE_MODE.DISCARD:
+					main_ref.add_card_to_self_from_discard_pile(self)
+"
+
+[node name="Card" type="TextureRect"]
+custom_minimum_size = Vector2(114, 157)
+offset_right = 114.0
+offset_bottom = 157.0
+texture = ExtResource("1_4c1fh")
+expand_mode = 1
+stretch_mode = 4
+script = SubResource("GDScript_2ixei")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
